@@ -348,4 +348,18 @@ abstract class BaseRepository implements RepositoryContract
 
         return $this;
     }
+
+    /**
+     * Create a new model record in the database.
+     *
+     * @param array $data
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function create(array $data)
+    {
+        $this->unsetClauses();
+
+        return $this->model->create($data);
+    }
 }

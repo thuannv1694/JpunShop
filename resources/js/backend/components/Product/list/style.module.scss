@@ -1,0 +1,10 @@
+@import '@/backend/assets/styles/mixins.scss';
+
+.searchInput {
+    width: 100%;
+    font-size: rem(24);
+    font-weight: bold;
+    padding: 0;
+    height: auto;
+    border: none;
+}

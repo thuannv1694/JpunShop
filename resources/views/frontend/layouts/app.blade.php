@@ -22,26 +22,25 @@
 
         @stack('after-styles')
     </head>
-    <body>
-        @include('includes.partials.read-only')
+        <body class="app header-fixed sidebar-fixed aside-menu-off-canvas sidebar-lg-show">
+        <div id="app" class="app-body">
+                @include('includes.partials.read-only')
+                @include('includes.partials.logged-in-as')
+                @include('frontend.includes.nav')
+{{--                <cui-frontend-header />--}}
+                <div class="container">
+                    @include('includes.partials.messages')
+                    @yield('content')
+                </div>
+{{--            </cui-frontend-header>--}}
+        </div>
 
-        <div id="app">
-            @include('includes.partials.logged-in-as')
-            @include('frontend.includes.nav')
-
-            <div class="container">
-                @include('includes.partials.messages')
-                @yield('content')
-            </div><!-- container -->
-        </div><!-- #app -->
-
-        <!-- Scripts -->
         @stack('before-scripts')
         {!! script(mix('js/manifest.js')) !!}
         {!! script(mix('js/vendor.js')) !!}
+        {!! script(mix('js/frontend/vue.js')) !!}
         {!! script(mix('js/frontend.js')) !!}
         @stack('after-scripts')
-
         @include('includes.partials.ga')
-    </body>
+        </body>
 </html>
