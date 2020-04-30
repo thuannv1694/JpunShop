@@ -31,7 +31,7 @@
         "cross-env": "^5.2.0",
         "cross-var": "^1.1.0",
         "jest": "^25.1.0",
-        "jquery": "^3.4.1",
+        "jquery": "^3.5.0",
         "laravel-mix": "^4.0.15",
         "laravel-mix-merge-manifest": "^0.1.2",
         "less": "^3.9.0",
