@@ -22,7 +22,7 @@
 
         @stack('after-styles')
     </head>
-    <body class="app header-fixed sidebar-fixed aside-menu-off-canvas sidebar-lg-show">
+    <body style="background-color: #fffcee" class="app header-fixed sidebar-fixed aside-menu-off-canvas sidebar-lg-show">
     <div id="app" class="app-body">
         @include('includes.partials.read-only')
         @include('includes.partials.logged-in-as')

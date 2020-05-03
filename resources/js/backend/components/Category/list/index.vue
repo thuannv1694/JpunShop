@@ -236,17 +236,12 @@
                 let self = this
                 self.form.validateFields((err, values) => {
                     if (!err) {
-                        this.saveCategoryApi({
-                            value: values
-                        }).then((response) => {
+                        this.saveCategoryApi({value: values}).then((response) => {
                             if (response.status === 200) {
                                 self.$message.success('Add New Successfully');
                                 self.visible = false
                                 this.listCategory = response.data.data;
-                                self.form.resetFields([
-                                    'name',
-                                    'parent_id',
-                                ])
+                                self.form.resetFields(['name','parent_id',])
                             }
                         });
                     }
@@ -256,9 +251,7 @@
                 let self = this
                 self.form.validateFields((err, values) => {
                     if (!err) {
-                        this.updateCategoryApi({
-                            value: values
-                        }).then((response) => {
+                        this.updateCategoryApi({value: values}).then((response) => {
                             if (response.status === 200) {
                                 self.$message.success('Update Successfully');
                                 self.visibleEdit = false
@@ -271,9 +264,7 @@
            },
             cancel (e) {},
             remove(id) {
-                this.removeCategoryApi({
-                  value: id
-                }).then((response) => {
+                this.removeCategoryApi({value: id}).then((response) => {
                     if (response.status === 200) {
                         this.$message.success('This is a message of success');
                         this.listCategory = response.data.data;

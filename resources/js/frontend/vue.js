@@ -3,7 +3,8 @@ import '../plugins'
 import Vue from 'vue'
 import store from './store'
 import VueRouter from 'vue-router'
-
+import SequentialEntrance from 'vue-sequential-entrance'
+import 'vue-sequential-entrance/vue-sequential-entrance.css'
 
 import {
     Avatar, TreeSelect, Rate, Breadcrumb, InputNumber, Steps, Skeleton,
@@ -56,12 +57,14 @@ Vue.use(DatePicker)
 Vue.use(AutoComplete)
 Vue.use(Popconfirm)
 Vue.use(Skeleton)
+Vue.use(SequentialEntrance);
 
 Vue.use(VueRouter)
 
 window.Vue = Vue
 
 import HomePage from '@/frontend/components/Home/page';
+import HomeProduct from '@/frontend/components/Home/product';
 
 Vue.prototype.$notification = notification
 Vue.prototype.$message = Message
@@ -80,6 +83,7 @@ const app = new Vue({
     router,
     components: {
         HomePage,
+        HomeProduct,
         CuiFrontendHeader: () => import( /* webpackChunkName: "js/chunks/cui-frontend-header.chunk" */ '@/frontend/components/LayoutComponents/Frontend/Header/index.vue'),
         CuiFrontendFooter: () => import( /* webpackChunkName: "js/chunks/cui-frontend-footer.chunk" */ '@/frontend/components/LayoutComponents/Frontend/Footer/index.vue'),
     },

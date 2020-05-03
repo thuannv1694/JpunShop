@@ -63,9 +63,9 @@
                 </div>
                 <div class="bottom-footer fot_copyright text-center">
                     <div class="container">
-                        <div class="">
+                        <div>
                             Bản quyền thuộc về
-                            <span class="banquyen">CM! Team</span>
+                            <span class="license">Admin Pun</span>
                         </div>
                     </div>
                 </div>
@@ -143,14 +143,32 @@
         text-align: center;
     }
     .footer .fot_copyright {
-        padding-bottom: 20px;
+        padding-top: 1rem;
         color: #FFF;
     }
-    .footer .fot_copyright .banquyen, footer .fot_copyright a {
+    .footer .fot_copyright .license, footer .fot_copyright a {
         font-weight: bold;
         color: #ffc000;
     }
     .footer .fot_copyright .block-xs {
         margin: 0 5px;
+    }
+    .list-menu {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+    .footer-click ul>li::after {
+        content: '';
+        display: block;
+        width: 0;
+        height: 2px;
+        background: #ffc000;
+        transition: width .3s;
+    }
+
+    .footer-click ul>li:hover::after {
+        width: 50%;
+        border-bottom: 2px solid #ffc000;
     }
 </style>

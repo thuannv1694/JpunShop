@@ -43,9 +43,9 @@ class Menu extends Model
         });
     }
 
-    public function hasManyProduct() {
-
-		return $this->hasMany(Product::class, 'menuID', 'id');
+    public function hasManyProduct() 
+    {
+		return $this->hasMany(Product::class, 'menuID');
 	}
 
     public function parent()

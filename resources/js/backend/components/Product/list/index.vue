@@ -83,6 +83,8 @@
   </div>
 </template>
 <script>
+import { mapState, mapActions } from "vuex";
+import store from '../_store'
 const columns = [
     {
         title: "#",
@@ -125,7 +127,6 @@ const columns = [
     }
 ];
 
-import { mapState, mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -145,103 +146,81 @@ export default {
     };
   },
   methods: {
-
+    ...mapActions({
+      searchApi: '$_product/searchApi',
+      searchIdProductApi: '$_product/searchIdProductApi',
+      removeApi: '$_product/removeApi'
+    }),
         onBlur(e) {
             this.open = false;
         },
-        onPageChange(page) {
-            this.loadingSke = true;
-            this.pagination = page;
-            setTimeout(() => {
-                this.loadingSke = false;
-            }, 500);
+        onPageChange(page, pageSize) {
+          this.pagination = page;
+          let config = {params: {keyword: this.keyword, page: this.pagination.current}}
+          this.searchApi(config).then(response => {
+            this.productData = response.data.data.data.data
+            this.pagination.total = response.data.data.data.total
+            this.loading = false;
+            this.loadingSke = true
+              setTimeout(() => {
+                  this.loadingSke = false
+              }, 500)
+          }).catch(
+              error => {console.log(error)}
+            );
         },
         search() {
-            clearInterval(this.timer)
-            this.timer = setInterval(
-                function () {
-                    clearInterval(this.timer)
-                    axios
-                        .get('/admin/product/search', {
-                            params: {
-                                keyword: this.keyword
-                            }
-                        })
-                        .then(response => {
-                            this.listSearch = response.data.data.data.data
-                            this.pagination.total = response.data.data.data.total
-                            this.open = true
-                        })
-                        .catch(error => {
-                            console.log(error)
-                        })
-                }.bind(this),
-                300
-            )
+            let config = {params: {keyword: this.keyword, page: this.pagination.current}}
+            this.searchApi(config).then(response => {
+              this.listSearch = response.data.data.data.data
+              this.pagination.total = response.data.data.data.total
+              this.open = true
+            }).catch(
+                error => {console.log(error)}
+              );
         },
         select(value) {
-            clearInterval(this.timer);
-            this.timer = setInterval(function () {
-                clearInterval(this.timer);
-                axios
-                    .get('/admin/product/searchIdProduct', {
-                        params: {
-                            id: value,
-                        }
-                    })
-                    .then(response => {
-                        this.productData = response.data.data.data
-                        this.pagination.total = response.data.data.total
-                        this.loading = false;
-                        this.open = false
-                        this.keyword = undefined
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    });
-            }.bind(this), 300)
+          let config = {params: {id: value}}
+          this.searchIdProductApi(config).then(response => {
+            this.productData = response.data.data.data
+            this.pagination.total = response.data.data.total
+            this.loading = false;
+            this.open = false
+            this.keyword = undefined
+          }).catch(
+              error => {console.log(error)}
+            );
         },
         cancel (e) {},
-
         editShow(id) {
             window.location.href = '/admin/product/edit/' + id;
         },
         remove(id) {
-            let self = this
-            axios({
-                method: 'post',
-                url: '/admin/product/remove',
-                data: {
-                    id: id,
-                }
-            }).then((response) => {
-                if (response.status === 200) {
-                    this.$message.success('This is a message of success');
-                    self.productData = response.data.data
-                }
-            });
+          let self = this
+          this.removeApi({id: id}).then((response) => {
+            if (response.status === 200) {
+              this.$message.success('This is a message of success');
+              self.productData = response.data.data
+            }
+          });
         },
         formatPrice(value) {
             let val = (value/1).toFixed(2).replace('.',',')
             return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
         }
-
   },
   created() {
-    axios
-        .get('/admin/product/search', {
-            params: {
-                keyword: this.keyword
-            }
-        })
-        .then(response => {
-            this.listSearch = response.data.data.data.data
-            this.pagination.total = response.data.data.data.total
-            this.productData = response.data.data.data.data
-        })
-        .catch(error => {
-            console.log(error)
-        })
+    const STORE_KEY = "$_product";
+    if (!(STORE_KEY in this.$store._modules.root._children)) {
+        this.$store.registerModule(STORE_KEY, store);
+    }
+
+    let config = {params: {keyword: this.keyword, page: this.pagination.current}}
+      this.searchApi(config).then(response => {
+        this.listSearch = response.data.data.data.data
+        this.pagination.total = response.data.data.data.total
+        this.productData = response.data.data.data.data
+    }).catch(error => {console.log(error)});
   },
   mounted() {
     setTimeout(() => {

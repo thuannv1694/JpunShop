@@ -32,6 +32,7 @@
                                             />
                                         </a-form-item>
                                     </div>
+
                                     <!-- Menu -->
                                     <div class="col-lg-12">
                                         <a-form-item label="Menu" :colon="false">
@@ -202,7 +203,7 @@
             }
         },
         created() {
-           
+
         }
     }
 </script>

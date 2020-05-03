@@ -31,8 +31,8 @@ class Product extends Model
         'updateBy'
     ];
 
-    function menus() {
-        return $this->hasMany(Menu::class, 'id', 'menuID');
+    function categorie() {
+        return $this->belongsTo(Menu::class);
     }
 
     public static function boot() {
